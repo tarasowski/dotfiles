@@ -5,3 +5,26 @@
 
 ## Change default keyboard mapping
 - Here is the default keyd .conf file [.conf](https://github.com/tarasowski/thinkpad/blob/main/etc/keyd/default.conf)
+
+## Add missing <> on US keyboard
+- Sine in a german (macintosh) version on US keyboard the following keys are missing <> do the following:
+
+```
+sudo vi /usr/share/X11/xkb/symbols/de
+
+# find this section
+xkb_symbols "mac" {
+    ...
+};
+
+# add this at the end
+key <TLDE> { [ less, greater ] };
+
+# run the command
+sudo dpkg-reconfigure xkb-data
+
+# log out and log in again
+
+```
+
+
