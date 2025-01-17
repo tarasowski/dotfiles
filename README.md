@@ -27,4 +27,12 @@ sudo dpkg-reconfigure xkb-data
 
 ```
 
+## Fix weird touchpad issues
+
+```
+sudo apt update
+# this reinstalls the driver for the touchpad
+sudo apt install --reinstall xserver-xorg-input-libinput
+```
+
 
