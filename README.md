@@ -34,5 +34,12 @@ sudo apt update
 # this reinstalls the driver for the touchpad
 sudo apt install --reinstall xserver-xorg-input-libinput
 ```
+# XP Pen Setup
+- Pair power on + shortcut (first button)
+- Download the drivers for Linux [download](https://www.xp-pen.com/download/deco-mw.html)
+- Install Gromit-MPX
+- Setup shortcuts for Gromit-MPX via Settings > Keyboard > View and customize shortcuts
+- Launch Gromit: ctrl + d (gromit-mpx --toggle ↵)
+- Clear Gomir: ctrl + o (gromit-mpx --clear && gromit-mpx --toggle ↵)
 
 
