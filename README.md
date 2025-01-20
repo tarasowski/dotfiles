@@ -42,4 +42,24 @@ sudo apt install --reinstall xserver-xorg-input-libinput
 - Launch Gromit: ctrl + d (gromit-mpx --toggle ↵)
 - Clear Gomir: ctrl + o (gromit-mpx --clear && gromit-mpx --toggle ↵)
 
+# Add .env profiles
+
+```
+function load_profile() {
+    echo "Enter the profile name: "
+    read profile_name
+    if [ -f ~/.env/"$profile_name" ]; then
+        source ~/.env/"$profile_name"
+        # Update the PS1 prompt with the current profile name
+        PS1="[$profile_name] $PS1"
+        echo "Loaded profile: $profile_name"
+    else
+        echo "Using default profile 'mvpfoundry'."
+        source ~/.env/mvpfoundry
+        PS1="[mvpfoundry] $PS1"
+    fi
+}
+
+load_profile
+```
 
