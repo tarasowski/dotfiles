@@ -11,3 +11,4 @@
 - WL clipboard: https://github.com/bugaevc/wl-clipboard
 - Multipass: https://github.com/canonical/multipass
 - Docker: https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+- Vaultwarden: https://github.com/dani-garcia/vaultwarden
