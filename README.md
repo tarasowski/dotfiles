@@ -62,4 +62,8 @@ function load_profile() {
 
 load_profile
 ```
+## Fix mouse precision
+```
+gsettings set org.gnome.desktop.peripherals.touchpad speed 0.15
+``
 
