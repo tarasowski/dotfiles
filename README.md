@@ -66,6 +66,6 @@ load_profile
 - set acceleration to flat via gnome-tweaks
 
 ```
-gsettings set org.gnome.desktop.peripherals.touchpad speed 0.15
+gsettings set org.gnome.desktop.peripherals.touchpad speed 0.2
 ```
 
