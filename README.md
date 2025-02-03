@@ -63,6 +63,7 @@ function load_profile() {
 load_profile
 ```
 ## Fix mouse precision
+- set acceleration to flat via gnome-tweaks
 
 ```
 gsettings set org.gnome.desktop.peripherals.touchpad speed 0.15
