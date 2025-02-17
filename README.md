@@ -69,3 +69,11 @@ load_profile
 gsettings set org.gnome.desktop.peripherals.touchpad speed 0.2
 ```
 
+## Fix the touchpad issue clicking on any button down to highlight the text
+
+- or open up `gnome-tweaks` go to `keyboard & mouse` go to mouse click emulation and activate mode `fingers` or run the command down below
+
+```
+gsettings set org.gnome.desktop.peripherals.touchpad click-method 'fingers'
+``` 
+
