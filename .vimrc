@@ -1,17 +1,57 @@
-call plug#begin('~/.vim/plugged')
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'voldikss/vim-floaterm'
+"call plug#begin('~/.vim/plugged')
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"Plug 'junegunn/fzf.vim'
+"Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'voldikss/vim-floaterm'
 " highlights end of blocks
-Plug 'andymass/vim-matchup'
+"Plug 'andymass/vim-matchup'
 
 " for sveltejs
-Plug 'othree/html5.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'evanleck/vim-svelte', {'branch': 'main'}
-call plug#end()
+"Plug 'othree/html5.vim'
+"Plug 'pangloss/vim-javascript'
+"Plug 'evanleck/vim-svelte', {'branch': 'main'}
+"call plug#end()
+
+filetype indent on
+set filetype=html
+set smartindent  
+
+" This makes Vim automatically reload a file when it detects an external change.
+" Setting for aider --watch-files command
+set autoread
+
+" when closing :wqall to auto close Floaterm
+autocmd QuitPre * silent! FloatermKill!
+
+" https://github.com/BryceVandegrift/pm
+let g:plugins = [
+\ "https://github.com/junegunn/fzf.git", 
+\ "https://github.com/junegunn/fzf.vim.git", 
+\ "https://github.com/neoclide/coc.nvim.git", 
+\ "https://github.com/voldikss/vim-floaterm.git", 
+\ "https://github.com/catppuccin/nvim.git", 
+\ "https://github.com/andymass/vim-matchup.git",
+\ "https://github.com/mattn/emmet-vim.git",
+\ "https://github.com/othree/html5.vim.git",
+\ "https://github.com/hashivim/vim-terraform.git",
+\ "https://github.com/madox2/vim-ai.git",
+\ "https://github.com/github/copilot.vim.git"
+\ ]
+
+" Delay loading coc.nvim after the buffer is displayed
+autocmd VimEnter * call timer_start(500, {-> execute('CocStart')})
+
+let g:coc_global_extensions = [
+\ 'coc-css',
+\ 'coc-emoji',
+\ 'coc-eslint',
+\ 'coc-html',
+\ 'coc-json',
+\ 'coc-python',
+\ 'coc-tsserver',
+\ 'coc-go',
+\ ]
 
 " Clear existing highlights
 highlight clear Pmenu
