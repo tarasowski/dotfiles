@@ -75,5 +75,10 @@ gsettings set org.gnome.desktop.peripherals.touchpad speed 0.2
 
 ```
 gsettings set org.gnome.desktop.peripherals.touchpad click-method 'fingers'
-``` 
+```
+
+## Fix Touchpad Precision Issue
+- in gnome-tweak deactivate the acceleration touchpad + pointing stick
+- remove synaptics drivers and change to libinput `sudo apt remove xserver-xorg-input-synaptics`
+- log out and log in again
 
