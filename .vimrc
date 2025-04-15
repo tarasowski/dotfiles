@@ -1,57 +1,30 @@
-"call plug#begin('~/.vim/plugged')
-"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-"Plug 'junegunn/fzf.vim'
-"Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'voldikss/vim-floaterm'
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'voldikss/vim-floaterm'
 " highlights end of blocks
-"Plug 'andymass/vim-matchup'
+Plug 'andymass/vim-matchup'
 
 " for sveltejs
-"Plug 'othree/html5.vim'
-"Plug 'pangloss/vim-javascript'
-"Plug 'evanleck/vim-svelte', {'branch': 'main'}
-"call plug#end()
+Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
+call plug#end()
 
-filetype indent on
-set filetype=html
-set smartindent  
 
-" This makes Vim automatically reload a file when it detects an external change.
-" Setting for aider --watch-files command
+set termguicolors
+" Set the Catppuccin flavor to 'frappe' or 'macchiato'
+let g:catppuccin_flavour = 'macchiato'  " Change to 'macchiato' for the Macchiato flavor
+
+" Activate the Catppuccin theme
+colorscheme catppuccin
+hi Visual ctermbg=DarkGray guibg=#44475a
+
+" Reload the file if it was changed outside of vim
 set autoread
-
-" when closing :wqall to auto close Floaterm
-autocmd QuitPre * silent! FloatermKill!
-
-" https://github.com/BryceVandegrift/pm
-let g:plugins = [
-\ "https://github.com/junegunn/fzf.git", 
-\ "https://github.com/junegunn/fzf.vim.git", 
-\ "https://github.com/neoclide/coc.nvim.git", 
-\ "https://github.com/voldikss/vim-floaterm.git", 
-\ "https://github.com/catppuccin/nvim.git", 
-\ "https://github.com/andymass/vim-matchup.git",
-\ "https://github.com/mattn/emmet-vim.git",
-\ "https://github.com/othree/html5.vim.git",
-\ "https://github.com/hashivim/vim-terraform.git",
-\ "https://github.com/madox2/vim-ai.git",
-\ "https://github.com/github/copilot.vim.git"
-\ ]
-
-" Delay loading coc.nvim after the buffer is displayed
-autocmd VimEnter * call timer_start(500, {-> execute('CocStart')})
-
-let g:coc_global_extensions = [
-\ 'coc-css',
-\ 'coc-emoji',
-\ 'coc-eslint',
-\ 'coc-html',
-\ 'coc-json',
-\ 'coc-python',
-\ 'coc-tsserver',
-\ 'coc-go',
-\ ]
+au FocusGained,BufEnter * checktime
 
 " Clear existing highlights
 highlight clear Pmenu
@@ -75,7 +48,6 @@ set backspace=indent,eol,start
 
 " for search highlights
 highlight Search ctermbg=yellow ctermfg=black guibg=yellow guifg=black
-
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -157,12 +129,6 @@ let g:floaterm_shell = "bash"
 nnoremap <leader>t :FloatermToggle<CR>
 
 
-" Set the colorscheme
-augroup ReloadColorscheme
-    autocmd!
-    autocmd VimEnter * colorscheme catppuccin-mocha
-augroup END
-
 " Activate mouse support
 set mouse=a
 
@@ -218,9 +184,6 @@ set ignorecase
 set smartcase
 
 
-" sets the rights text highlighting color
-set bg=light
-
 " shows constantly in which file you are working
 set laststatus=2
 set statusline+=%F\ \%{Percent()}%%
@@ -248,8 +211,6 @@ autocmd Filetype go nnoremap <leader><leader> :w!<CR>:!clear && go run %<CR>
 let g:netrw_banner = 0
 let g:netrw_winsize=15
 let g:netrw_browse_split=4
-
-
 
 set noswapfile
 
