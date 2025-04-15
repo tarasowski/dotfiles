@@ -1,7 +1,25 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 set -o vi
-fastfetch
+# Run fastfetch only once per login or graphical session, not in every new terminal/tab.
+# This uses a lock file in /tmp that is unique per session:
+# - If $XDG_SESSION_ID is set (most modern desktops), use it for session-uniqueness.
+# - Else if $DISPLAY is set (X11), use it for graphical session-uniqueness.
+# - Else fallback to per-user (may run once per TTY).
+if [ -n "$XDG_SESSION_ID" ]; then
+    # Use session ID for lock file
+    FASTFETCH_LOCKFILE="/tmp/.fastfetch-ran-$USER-$XDG_SESSION_ID"
+elif [ -n "$DISPLAY" ]; then
+    # Use X11 display for lock file
+    FASTFETCH_LOCKFILE="/tmp/.fastfetch-ran-$USER-$(echo $DISPLAY | tr : _)"
+else
+    # Fallback: per-user (may run once per TTY)
+    FASTFETCH_LOCKFILE="/tmp/.fastfetch-ran-$USER"
+fi
+if [ ! -f "$FASTFETCH_LOCKFILE" ]; then
+    fastfetch
+    touch "$FASTFETCH_LOCKFILE"
+fi
 export EDITOR=vim
 
 # If not running interactively, don't do anything
@@ -42,22 +60,43 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-# Load profile function
-function load_profile() {
-    echo "Enter the profile name: "
-    read profile_name
-    if [ -f ~/.env/"$profile_name" ]; then
-        source ~/.env/"$profile_name"
-        export PROFILE_NAME="[$profile_name] "
-        echo "Loaded profile: $profile_name"
+# Function to switch profiles on demand
+function sp() {
+    local profile
+    if [ -z "$1" ]; then
+        if command -v fzf >/dev/null 2>&1; then
+            profile=$(ls -1 ~/.env/ | grep -v '^\.' | fzf --prompt="Select profile: ")
+            if [ -z "$profile" ]; then
+                echo "No profile selected."
+                return 1
+            fi
+        else
+            echo "Available profiles in ~/.env/:"
+            ls -1 ~/.env/ | grep -v '^\.' || echo "  (none found)"
+            echo "Usage: switch_profile <profile_name>"
+            echo "Tip: Install 'fzf' for interactive selection."
+            return 1
+        fi
     else
-        echo "Using default profile 'mvpfoundry'."
-        source ~/.env/mvpfoundry
-        export PROFILE_NAME="[mvpfoundry] "
+        profile="$1"
+    fi
+    if [ -f ~/.env/"$profile" ]; then
+        source ~/.env/"$profile"
+        export PROFILE_NAME="[$profile] "
+        echo "Switched to profile: $profile"
+    else
+        echo "Profile '$profile' not found in ~/.env/"
+        return 1
     fi
 }
 
-load_profile
+# Load default profile (mvpfoundry) at shell startup
+if [ -f ~/.env/mvpfoundry ]; then
+    source ~/.env/mvpfoundry
+    export PROFILE_NAME="[mvpfoundry] "
+else
+    export PROFILE_NAME="[default] "
+fi
 
 # Function to parse Git branch
 parse_git_branch() {
@@ -126,5 +165,13 @@ export NVM_DIR="$HOME/.nvm"
 
 # Adjust touchpad settings
 gsettings set org.gnome.desktop.peripherals.touchpad accel-profile 'flat'
-gsettings set org.gnome.desktop.peripherals.touchpad speed 0.25
+gsettings set org.gnome.desktop.peripherals.touchpad speed 0.27
 gsettings set org.gnome.desktop.peripherals.touchpad click-method 'fingers'
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
